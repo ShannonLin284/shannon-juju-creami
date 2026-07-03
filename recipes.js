@@ -24,6 +24,14 @@
 //   },
 // ♡ ─────────────────────────────────────────────────── ♡
 
+// ♡ faces for the book! drop pics into the images/ folder
+//   and point to them here — chips & polaroids use these.
+//   (add anyone: "mimi": "images/mimi.jpg")
+const AVATARS = {
+  shannon: "images/shannon.jpg",
+  juju: "images/juju.jpg",
+};
+
 const RECIPES = [
   {
     title: "Strawberry Cheesecake",

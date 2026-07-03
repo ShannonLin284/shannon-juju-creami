@@ -120,7 +120,26 @@ function chipFor(name) {
   const style = n === "shannon" ? ["shannon", "🎀"]
     : n === "juju" ? ["juju", "🧸"]
     : ["guest", "🍒"];
-  return `<span class="chip ${style[0]}">${esc(name || "someone sweet")} ${style[1]}</span>`;
+  const pic = (typeof AVATARS !== "undefined" && AVATARS[n])
+    ? `<img class="chip-face" src="${esc(AVATARS[n])}" alt="" onerror="this.remove()" />`
+    : "";
+  return `<span class="chip ${style[0]}">${pic}${esc(name || "someone sweet")} ${style[1]}</span>`;
+}
+
+function polaroidsHTML() {
+  if (typeof AVATARS === "undefined") return "";
+  const shots = Object.entries(AVATARS).map(([name, src]) => {
+    const fallback = name === "shannon" ? "🎀" : name === "juju" ? "🧸" : "🍒";
+    return `
+      <figure class="polaroid">
+        <span class="shot">
+          <span class="pol-fallback">${fallback}</span>
+          <img src="${esc(src)}" alt="${esc(name)}" onerror="this.remove()" />
+        </span>
+        <figcaption>${esc(name)} ♡</figcaption>
+      </figure>`;
+  }).join("");
+  return `<div class="polaroids">${shots}</div>`;
 }
 
 function coverHTML() {
@@ -137,7 +156,7 @@ function coverHTML() {
 function dedicationHTML() {
   return `
     <div class="dedication">
-      <div class="doily">🍨</div>
+      ${polaroidsHTML() || `<div class="doily">🍨</div>`}
       <p>for cozy nights,<br/>
       24-hour freezes,<br/>
       &amp; the ones we re-spin for ♡</p>
@@ -278,7 +297,7 @@ document.addEventListener("keydown", (e) => {
 /* ── responsive scale ── */
 
 function fitBook() {
-  const scale = Math.min(1, (window.innerWidth - 30) / 900);
+  const scale = Math.max(0.2, Math.min(1, (window.innerWidth - 30) / 900));
   bookWrap.dataset.scale = scale < 1 ? `scale(${scale})` : "";
   goTo(currentSheet, true);
 }

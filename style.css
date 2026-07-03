@@ -227,6 +227,16 @@ body {
   border-radius: 999px;
   margin: 0 3px;
 }
+.chip .chip-face {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: -4px;
+  margin-right: 4px;
+  border: 1.5px solid rgba(255, 255, 255, .8);
+  box-shadow: 0 1px 2px var(--shadow);
+}
 .chip.shannon { background: var(--pink);  color: var(--rose-ink); }
 .chip.juju    { background: var(--mint);  color: #4c7a5c; }
 .chip.guest   { background: #e8ddf5;      color: #7b5ea3; }
@@ -406,6 +416,52 @@ body {
   justify-content: center;
   font-size: 44px;
 }
+/* polaroids of us ♡ */
+.polaroids {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.polaroid {
+  margin: 0;
+  background: #fff;
+  padding: 8px 8px 5px;
+  border: 1px solid #f0e4e8;
+  box-shadow: 0 6px 14px var(--shadow);
+  transform: rotate(-5deg);
+}
+.polaroid:nth-child(even) {
+  transform: rotate(4deg) translateY(6px);
+}
+.polaroid .shot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12px 12px, rgba(255,255,255,.55) 0 3px, transparent 4px),
+    linear-gradient(150deg, var(--pink), var(--pink-deep));
+  background-size: 30px 30px, 100% 100%;
+}
+.polaroid .pol-fallback { font-size: 42px; }
+.polaroid img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.polaroid figcaption {
+  font-family: "Homemade Apple", cursive;
+  font-size: 12px;
+  text-align: center;
+  color: var(--rose-ink);
+  padding-top: 5px;
+}
+
 .dedication p {
   font-family: "Homemade Apple", cursive;
   font-size: 15px;
