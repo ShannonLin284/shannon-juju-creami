@@ -163,19 +163,23 @@ function dedicationHTML() {
     </div>`;
 }
 
-function albumHTML() {
-  if (typeof PHOTOS === "undefined" || !PHOTOS.length) return null;
-  const shots = PHOTOS.map((p) => `
-    <figure class="polaroid mini">
-      <span class="shot"><img src="${esc(p.src)}" alt="" loading="lazy" onerror="this.closest('figure').remove()" /></span>
-      <figcaption>${esc(p.caption || "")} ♡</figcaption>
-    </figure>`).join("");
-  return `
-    <div class="page-inner album">
-      <h2 class="recipe-title">our scrapbook</h2>
-      <div class="divider">· ♡ · ♡ · ♡ ·</div>
-      <div class="album-grid">${shots}</div>
-    </div>`;
+function albumPagesHTML() {
+  if (typeof PHOTOS === "undefined" || !PHOTOS.length) return [];
+  const pages = [];
+  for (let i = 0; i < PHOTOS.length; i += 4) {
+    const shots = PHOTOS.slice(i, i + 4).map((p) => `
+      <figure class="polaroid mini">
+        <span class="shot"><img src="${esc(p.src)}" alt="" loading="lazy" onerror="this.closest('figure').remove()" /></span>
+        <figcaption>${esc(p.caption || "")} ♡</figcaption>
+      </figure>`).join("");
+    pages.push(`
+      <div class="page-inner album">
+        <h2 class="recipe-title">our scrapbook${i > 0 ? ", cont ♡" : ""}</h2>
+        <div class="divider">· ♡ · ♡ · ♡ ·</div>
+        <div class="album-grid">${shots}</div>
+      </div>`);
+  }
+  return pages;
 }
 
 function backCoverHTML() {
@@ -226,9 +230,7 @@ function buildBook() {
   const recipes = allRecipes();
 
   // page sequence: cover | dedication, scrapbook, recipes..., (filler), back cover
-  const pages = [coverHTML(), dedicationHTML()];
-  const album = albumHTML();
-  if (album) pages.push(album);
+  const pages = [coverHTML(), dedicationHTML(), ...albumPagesHTML()];
   recipes.forEach((r) => pages.push(recipeHTML(r)));
   if (pages.length % 2 === 0) {
     pages.push(`<div class="dedication"><p>~ this page is saving room<br/>for your next masterpiece ♡ ~</p></div>`);
