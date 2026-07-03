@@ -24,4 +24,11 @@
 //   controlled by the security rules, not by hiding keys)
 // ♡ ─────────────────────────────────────────────────── ♡
 
-window.FIREBASE_CONFIG = null;
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCPmaICua-fvfdbWyT6Cs3uT6pCmDhC7L0",
+  authDomain: "shannon-juju-creami.firebaseapp.com",
+  projectId: "shannon-juju-creami",
+  storageBucket: "shannon-juju-creami.firebasestorage.app",
+  messagingSenderId: "772495542406",
+  appId: "1:772495542406:web:5d7a5c2925320fcd8f2907",
+};
