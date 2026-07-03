@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shannon &amp; Juju's Creami Book ♡</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍨</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Homemade+Apple&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="floaties" aria-hidden="true">
+    <span>🌸</span><span>♡</span><span>🌵</span><span>🍓</span><span>♡</span>
+    <span>🧁</span><span>🌸</span><span>🍨</span><span>♡</span><span>🎀</span>
+  </div>
+
+  <div class="cloud-badge" id="cloudBadge">🧺 scrapbook mode — pages save on this device only</div>
+
+  <main class="scene">
+    <div class="book-wrap" id="bookWrap">
+      <div class="book" id="book"></div>
+    </div>
+
+    <nav class="controls">
+      <button class="ctrl-btn" id="prevBtn" title="previous page">‹ back</button>
+      <span class="page-dots" id="pageDots"></span>
+      <button class="ctrl-btn" id="nextBtn" title="next page">next ›</button>
+    </nav>
+
+    <button class="add-btn" id="addBtn">＋ add a recipe ♡</button>
+  </main>
+
+  <!-- add-a-recipe modal -->
+  <div class="modal-veil" id="modalVeil" hidden>
+    <div class="modal doily-edge" role="dialog" aria-label="Add a recipe">
+      <h2 class="modal-title" id="modalTitle">a new recipe for the book ♡</h2>
+      <form id="recipeForm">
+        <input type="hidden" name="editId" />
+        <div class="form-row">
+          <label>recipe name
+            <input type="text" name="title" required placeholder="Peachy Keen Sorbet" />
+          </label>
+          <label class="tiny">emoji
+            <input type="text" name="emoji" placeholder="🍑" maxlength="4" />
+          </label>
+        </div>
+        <div class="form-row">
+          <label>your name
+            <input type="text" name="author" required maxlength="24" placeholder="shannon" />
+          </label>
+          <label>creami mode
+            <input type="text" name="mode" placeholder="Lite Ice Cream" />
+          </label>
+        </div>
+        <label>ingredients <small>(one per line)</small>
+          <textarea name="ingredients" rows="4" required placeholder="1 cup milk&#10;2 tbsp sugar"></textarea>
+        </label>
+        <label>steps <small>(one per line)</small>
+          <textarea name="steps" rows="4" required placeholder="Mix everything&#10;Freeze 24 hours&#10;Spin!"></textarea>
+        </label>
+        <label>grandma's note <small>(optional)</small>
+          <input type="text" name="notes" placeholder="best enjoyed in fuzzy socks" />
+        </label>
+        <div class="form-actions">
+          <button type="button" class="ctrl-btn" id="cancelBtn">nevermind</button>
+          <button type="submit" class="ctrl-btn primary">stitch it in ♡</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="recipes.js"></script>
+  <script src="firebase-config.js"></script>
+  <script type="module" src="book.js"></script>
+</body>
+</html>

@@ -1,0 +1,599 @@
+/* ♡ Shannon & Juju's Creami Book — grandma pink edition ♡ */
+
+:root {
+  --sky: #d6ecf9;
+  --sky-deep: #bfe2f5;
+  --pink: #f9c9d4;
+  --pink-deep: #f4a7b9;
+  --pink-ink: #d9738f;
+  --rose-ink: #b95c78;
+  --mint: #bfe3c8;
+  --mint-deep: #93cda4;
+  --teal: #7fc8c4;
+  --cream: #fffdf8;
+  --paper-line: #f3dde3;
+  --ink: #6b5560;
+  --shadow: rgba(185, 92, 120, 0.25);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.55) 0 6px, transparent 7px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.5) 0 5px, transparent 6px),
+    radial-gradient(circle at 40% 85%, rgba(255,255,255,.5) 0 4px, transparent 5px),
+    radial-gradient(circle at 90% 15%, rgba(255,255,255,.5) 0 5px, transparent 6px),
+    linear-gradient(180deg, var(--sky) 0%, var(--sky-deep) 100%);
+  background-size: 340px 340px, 420px 420px, 380px 380px, 300px 300px, 100% 100%;
+  overflow-x: hidden;
+}
+
+/* floating doodads */
+.floaties {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.floaties span {
+  position: absolute;
+  font-size: 22px;
+  opacity: .5;
+  animation: floaty 9s ease-in-out infinite;
+}
+.floaties span:nth-child(1)  { left: 4%;  top: 12%; animation-delay: 0s; }
+.floaties span:nth-child(2)  { left: 12%; top: 70%; animation-delay: -2s; color: var(--pink-ink); }
+.floaties span:nth-child(3)  { left: 7%;  top: 42%; animation-delay: -4s; }
+.floaties span:nth-child(4)  { left: 90%; top: 18%; animation-delay: -1s; }
+.floaties span:nth-child(5)  { left: 95%; top: 55%; animation-delay: -5s; color: var(--pink-ink); }
+.floaties span:nth-child(6)  { left: 87%; top: 80%; animation-delay: -3s; }
+.floaties span:nth-child(7)  { left: 45%; top: 6%;  animation-delay: -6s; }
+.floaties span:nth-child(8)  { left: 55%; top: 92%; animation-delay: -2.5s; }
+.floaties span:nth-child(9)  { left: 25%; top: 8%;  animation-delay: -7s; color: var(--pink-ink); }
+.floaties span:nth-child(10) { left: 75%; top: 5%;  animation-delay: -4.5s; }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50%      { transform: translateY(-16px) rotate(6deg); }
+}
+
+/* ───────── the book ───────── */
+
+.scene {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 30px 10px 40px;
+  perspective: 2400px;
+}
+
+.book-wrap {
+  transition: transform .8s cubic-bezier(.4, .1, .2, 1);
+}
+
+.book {
+  position: relative;
+  width: 860px;
+  height: 560px;
+  transform-style: preserve-3d;
+}
+
+/* soft table shadow under the book */
+.book::before {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: -26px;
+  height: 40px;
+  background: radial-gradient(ellipse at center, var(--shadow) 0%, transparent 70%);
+  filter: blur(6px);
+  transition: left .8s cubic-bezier(.4,.1,.2,1), right .8s cubic-bezier(.4,.1,.2,1);
+}
+.book.closed-front::before { left: 50%; }
+.book.closed-back::before  { right: 50%; }
+
+/* hard book cover behind the pages */
+.book::after {
+  content: "";
+  position: absolute;
+  top: -14px;
+  bottom: -14px;
+  left: -14px;
+  right: -14px;
+  transition: left .8s cubic-bezier(.4,.1,.2,1), right .8s cubic-bezier(.4,.1,.2,1);
+  border-radius: 18px 26px 26px 18px;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,.22) 14px 28px),
+    linear-gradient(135deg, var(--pink-deep), var(--pink-ink));
+  box-shadow:
+    0 18px 40px var(--shadow),
+    inset 0 0 0 4px rgba(255,255,255,.45),
+    inset 0 0 0 8px var(--pink-deep);
+  transform: translateZ(-6px);
+}
+.book.closed-front::after { left: calc(50% - 14px); }
+.book.closed-back::after  { right: calc(50% - 14px); }
+
+.sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform .9s cubic-bezier(.35, .05, .25, 1);
+  cursor: pointer;
+}
+.sheet.flipped { transform: rotateY(-180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 27px, var(--paper-line) 27px 28px),
+    var(--cream);
+  box-shadow: inset 0 0 30px rgba(217, 115, 143, .08);
+}
+.face.front {
+  border-radius: 4px 14px 14px 4px;
+  border-left: 2px solid rgba(217, 115, 143, .15);
+}
+.face.back {
+  transform: rotateY(180deg);
+  border-radius: 14px 4px 4px 14px;
+  border-right: 2px solid rgba(217, 115, 143, .15);
+}
+
+/* ───────── page innards ───────── */
+
+.page-inner {
+  height: 100%;
+  padding: 34px 36px 46px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink-deep) transparent;
+}
+
+.page-num {
+  position: absolute;
+  bottom: 12px;
+  font-family: "Homemade Apple", cursive;
+  font-size: 13px;
+  color: var(--pink-ink);
+  opacity: .7;
+}
+.face.front .page-num { right: 20px; }
+.face.back  .page-num { left: 20px; }
+
+/* scalloped lace strip along the spine side */
+.face::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  background: radial-gradient(circle at 0 6px, var(--pink) 0 5px, transparent 6px);
+  background-size: 12px 12px;
+  opacity: .8;
+}
+.face.front::after { left: 0;  transform: none; }
+.face.back::after  { right: 0; transform: scaleX(-1); }
+
+/* recipe page */
+.recipe-emoji {
+  font-size: 40px;
+  text-align: center;
+  display: block;
+  filter: drop-shadow(0 3px 4px var(--shadow));
+}
+
+.recipe-title {
+  font-family: "Dancing Script", cursive;
+  font-size: 34px;
+  color: var(--rose-ink);
+  text-align: center;
+  margin: 4px 0 2px;
+  line-height: 1.1;
+}
+
+.byline {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.byline .chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin: 0 3px;
+}
+.chip.shannon { background: var(--pink);  color: var(--rose-ink); }
+.chip.juju    { background: var(--mint);  color: #4c7a5c; }
+.chip.guest   { background: #e8ddf5;      color: #7b5ea3; }
+.chip.mode    { background: var(--sky);   color: #4a7ea3; }
+
+.divider {
+  text-align: center;
+  color: var(--pink-deep);
+  font-size: 13px;
+  letter-spacing: 6px;
+  margin: 6px 0 10px;
+  user-select: none;
+}
+
+.section-label {
+  font-family: "Homemade Apple", cursive;
+  font-size: 15px;
+  color: var(--pink-ink);
+  margin: 12px 0 6px;
+}
+
+.ing-list, .step-list {
+  margin: 0;
+  padding-left: 6px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  font-weight: 500;
+}
+.ing-list li {
+  list-style: none;
+}
+.ing-list li::before {
+  content: "♡ ";
+  color: var(--pink-deep);
+}
+.step-list {
+  padding-left: 22px;
+}
+.step-list li::marker {
+  color: var(--pink-ink);
+  font-weight: 700;
+}
+
+.note {
+  margin-top: 14px;
+  font-family: "Homemade Apple", cursive;
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--rose-ink);
+  background: linear-gradient(180deg, rgba(249, 201, 212, .35), rgba(249, 201, 212, .15));
+  border: 1px dashed var(--pink-deep);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.note::before { content: "🧶 "; }
+
+.page-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+.page-actions .forget-btn { margin: 0; }
+
+.forget-btn {
+  display: block;
+  margin: 14px auto 0;
+  background: none;
+  border: none;
+  color: var(--pink-ink);
+  font-family: "Quicksand", sans-serif;
+  font-size: 11.5px;
+  cursor: pointer;
+  opacity: .55;
+  text-decoration: underline dotted;
+}
+.forget-btn:hover { opacity: 1; }
+
+/* ───────── cover page ───────── */
+
+.cover {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 12px 12px, rgba(255,255,255,.5) 0 3px, transparent 4px),
+    linear-gradient(160deg, var(--pink) 0%, var(--pink-deep) 100%);
+  background-size: 44px 44px, 100% 100%;
+}
+
+.cover .bubble {
+  position: relative;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  padding: 16px 26px 18px;
+  margin-bottom: 22px;
+  box-shadow: 4px 5px 0 rgba(107, 85, 96, .25);
+}
+.cover .bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -14px;
+  left: 62%;
+  width: 18px;
+  height: 18px;
+  background: var(--cream);
+  border-right: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  transform: skewX(-18deg) rotate(45deg);
+}
+.cover .bubble .heart {
+  font-size: 42px;
+  display: block;
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  12%      { transform: scale(1.15); }
+  24%      { transform: scale(1); }
+  36%      { transform: scale(1.1); }
+}
+
+.cover h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: 44px;
+  line-height: 1.05;
+  margin: 0 0 6px;
+  color: var(--cream);
+  text-shadow: 2px 3px 0 var(--rose-ink);
+}
+.cover .subtitle {
+  font-family: "Homemade Apple", cursive;
+  font-size: 14px;
+  color: var(--rose-ink);
+  margin: 2px 0 18px;
+}
+.cover .cactus { font-size: 30px; }
+.cover .hint {
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rose-ink);
+  background: rgba(255, 253, 248, .7);
+  border-radius: 999px;
+  padding: 5px 14px;
+  animation: floaty 3s ease-in-out infinite;
+}
+
+/* inside cover / dedication */
+.dedication {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+.dedication .doily {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background:
+    radial-gradient(circle, var(--cream) 0 38%, transparent 39%),
+    repeating-conic-gradient(var(--pink) 0 10deg, var(--pink-deep) 10deg 20deg);
+  -webkit-mask: radial-gradient(circle at 50% 50%, black 62%, transparent 63%),
+    radial-gradient(circle at 50% 0%, black 0 12%, transparent 13%);
+  mask-composite: add;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+}
+.dedication p {
+  font-family: "Homemade Apple", cursive;
+  font-size: 15px;
+  line-height: 2.2;
+  color: var(--rose-ink);
+  margin: 0;
+}
+
+/* back cover */
+.backcover {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(160deg, var(--mint) 0%, var(--mint-deep) 100%);
+  font-family: "Dancing Script", cursive;
+  font-size: 26px;
+  color: #3f6b50;
+  text-align: center;
+  padding: 30px;
+}
+
+/* cloud status badge */
+.cloud-badge {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rose-ink);
+  background: rgba(255, 253, 248, .85);
+  border: 2px dashed var(--pink-deep);
+  border-radius: 999px;
+  padding: 5px 16px;
+  white-space: nowrap;
+  max-width: 92vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cloud-badge.cloud {
+  border-style: solid;
+  border-color: var(--teal);
+  color: #3f7a76;
+}
+
+/* ───────── controls ───────── */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.ctrl-btn {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--rose-ink);
+  background: var(--cream);
+  border: 2px solid var(--pink-deep);
+  border-radius: 999px;
+  padding: 8px 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--pink-deep);
+  transition: transform .12s, box-shadow .12s;
+}
+.ctrl-btn:hover  { transform: translateY(-2px); box-shadow: 0 5px 0 var(--pink-deep); }
+.ctrl-btn:active { transform: translateY(1px);  box-shadow: 0 1px 0 var(--pink-deep); }
+.ctrl-btn.primary { background: var(--pink-deep); color: var(--cream); }
+
+.page-dots {
+  display: flex;
+  gap: 7px;
+}
+.page-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(217, 115, 143, .3);
+  transition: transform .2s, background .2s;
+}
+.page-dots i.on {
+  background: var(--pink-ink);
+  transform: scale(1.35);
+}
+
+.add-btn {
+  position: fixed;
+  right: 26px;
+  bottom: 24px;
+  z-index: 5;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--cream);
+  background: linear-gradient(135deg, var(--pink-deep), var(--pink-ink));
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+  padding: 12px 22px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px var(--shadow);
+  transition: transform .15s;
+}
+.add-btn:hover { transform: scale(1.06) rotate(-2deg); }
+
+/* ───────── modal ───────── */
+
+.modal-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(107, 85, 96, .35);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-veil[hidden] { display: none; }
+
+.modal {
+  width: min(480px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--cream);
+  border-radius: 22px;
+  padding: 26px 28px;
+  box-shadow: 0 20px 50px var(--shadow), 0 0 0 6px var(--pink), 0 0 0 9px var(--cream);
+}
+
+.modal-title {
+  font-family: "Dancing Script", cursive;
+  font-size: 30px;
+  color: var(--rose-ink);
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.modal label {
+  display: block;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--pink-ink);
+  margin-bottom: 10px;
+}
+.modal label small { font-weight: 500; opacity: .7; }
+
+.modal input, .modal textarea, .modal select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid var(--pink);
+  border-radius: 12px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color .15s;
+}
+.modal input:focus, .modal textarea:focus, .modal select:focus {
+  border-color: var(--pink-ink);
+}
+.modal textarea { resize: vertical; }
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+.form-row label { flex: 1; }
+.form-row label.tiny { flex: 0 0 90px; }
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+/* ───────── little screens ───────── */
+
+@media (max-width: 920px) {
+  .scene { padding-top: 16px; }
+  /* book scales down via JS transform on .book-wrap */
+}
