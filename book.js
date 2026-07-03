@@ -163,6 +163,21 @@ function dedicationHTML() {
     </div>`;
 }
 
+function albumHTML() {
+  if (typeof PHOTOS === "undefined" || !PHOTOS.length) return null;
+  const shots = PHOTOS.map((p) => `
+    <figure class="polaroid mini">
+      <span class="shot"><img src="${esc(p.src)}" alt="" loading="lazy" onerror="this.closest('figure').remove()" /></span>
+      <figcaption>${esc(p.caption || "")} ♡</figcaption>
+    </figure>`).join("");
+  return `
+    <div class="page-inner album">
+      <h2 class="recipe-title">our scrapbook</h2>
+      <div class="divider">· ♡ · ♡ · ♡ ·</div>
+      <div class="album-grid">${shots}</div>
+    </div>`;
+}
+
 function backCoverHTML() {
   return `
     <div class="backcover">
@@ -210,8 +225,10 @@ function allRecipes() {
 function buildBook() {
   const recipes = allRecipes();
 
-  // page sequence: cover | dedication, recipes..., (filler), back cover
+  // page sequence: cover | dedication, scrapbook, recipes..., (filler), back cover
   const pages = [coverHTML(), dedicationHTML()];
+  const album = albumHTML();
+  if (album) pages.push(album);
   recipes.forEach((r) => pages.push(recipeHTML(r)));
   if (pages.length % 2 === 0) {
     pages.push(`<div class="dedication"><p>~ this page is saving room<br/>for your next masterpiece ♡ ~</p></div>`);

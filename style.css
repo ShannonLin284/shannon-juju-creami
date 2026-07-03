@@ -462,6 +462,23 @@ body {
   padding-top: 5px;
 }
 
+/* scrapbook album page */
+.album-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 22px;
+  padding: 8px 0 20px;
+}
+.polaroid.mini { transform: rotate(-3.5deg); }
+.polaroid.mini:nth-child(even) { transform: rotate(3deg) translateY(4px); }
+.polaroid.mini:nth-child(3n) { transform: rotate(-1.5deg) translateY(-2px); }
+.polaroid.mini .shot {
+  width: 140px;
+  height: 140px;
+}
+.polaroid.mini figcaption { max-width: 140px; }
+
 .dedication p {
   font-family: "Homemade Apple", cursive;
   font-size: 15px;

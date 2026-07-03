@@ -32,6 +32,16 @@ const AVATARS = {
   juju: "images/juju.jpg",
 };
 
+// ♡ the scrapbook page! add a pic + caption and it
+//   appears in the photo album spread of the book.
+const PHOTOS = [
+  { src: "images/us-hike.jpg",    caption: "to the top of the world" },
+  { src: "images/us-matcha.jpg",  caption: "matcha dates & sunsets" },
+  { src: "images/juju-spin.jpg",  caption: "head chef inspecting the spin" },
+  { src: "images/us-bowls.jpg",   caption: "quality control department" },
+  { src: "images/us-swim.jpg",    caption: "post-swim, pre-creami" },
+];
+
 const RECIPES = [
   {
     title: "Strawberry Cheesecake",
