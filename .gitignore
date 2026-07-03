@@ -1,0 +1,8 @@
+# firebase CLI droppings — can contain auth traces, never commit
+firebase-debug.log*
+firestore-debug.log*
+.firebase/
+
+# misc
+.DS_Store
+node_modules/
